@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FragranceCalculator.Views.CalculatorPageView"
+             xmlns:vm="clr-namespace:FragranceCalculator.ViewModels"
+             Title="CalculatorPage" BindingContext="{vm:CalculatorPageViewModel}"
+             BackgroundColor="LightGray">
+    <Grid x:DataType="vm:CalculatorPageViewModel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <Label Text="Fragrance Calculator" 
+               TextColor="White" 
+               FontSize="Title" 
+               VerticalTextAlignment="Center" 
+               HorizontalTextAlignment="Center"
+               Grid.Row="0" 
+               BackgroundColor="Purple"/>
+        
+        <!-- Vessel Info -->
+        <VerticalStackLayout Spacing="10" 
+                             Grid.Row="1"
+                             Margin="10"
+                             VerticalOptions="Center">
+            <!-- Vessel Fill -->
+            <VerticalStackLayout Grid.Row="0" 
+                                 Spacing="10"
+                                 HorizontalOptions="Fill">
+                <Label Text="{Binding VesselFillLabel, StringFormat='{0} (g)'}" 
+                       HorizontalOptions="Center"
+                       TextColor="Purple"
+                       FontSize="Large"
+                       FontAttributes="Bold"/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="-"
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            Command="{Binding VesselFillChangedMinusCommand}"/>
+                    <Editor Text="{Binding VesselFill}"
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            TextColor="Black"
+                            Keyboard="Numeric"
+                            IsTextPredictionEnabled="False"/>
+                    <Button Text="+" 
+                            Grid.Column="2"
+                            Command="{Binding VesselFillChangedPlusCommand}"/>
+                </Grid>
+            </VerticalStackLayout>
+            <!-- Number of vessels -->
+            <VerticalStackLayout Grid.Row="1" 
+                                 Spacing="10">
+                <Label Text="{Binding NumberOfVesselsLabel}"
+                       HorizontalOptions="Center"
+                       TextColor="Purple"
+                       FontSize="Large"
+                       FontAttributes="Bold"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Text="-"
+                            FontSize="Large"
+                            FontAttributes="Bold"
+                            Command="{Binding NumberOfVesselsMinusCommand}"/>
+                    <Editor Text="{Binding NumberOfVessels}"
+                            Grid.Column="1"
+                            HorizontalTextAlignment="Center"
+                            VerticalTextAlignment="Center"
+                            TextColor="Black"
+                            Keyboard="Numeric"
+                            IsTextPredictionEnabled="False"/>
+                    <Button Text="+" 
+                            Grid.Column="2"
+                            Command="{Binding NumberOfVesselsPlusCommand}"/>
+                </Grid>
+            </VerticalStackLayout>
+            <!-- Total Percentage -->
+            <VerticalStackLayout>
+                <Label Text="Fragrance percentage of total" 
+                       HorizontalOptions="Center"
+                       TextColor="Purple"
+                       FontAttributes="Bold"
+                       FontSize="Large"/>
+                <Label Text="{Binding TotalPercentage, StringFormat='{}{0} %'}"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"/>
+                <Slider Value="{Binding TotalPercentage}" 
+                        Maximum="{Binding MaxPercentage}"/>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+        
+        <Button Text="Caclulate" 
+                Grid.Row="2"
+                FontSize="Title"
+                FontAttributes="Bold"
+                Margin="10"
+                Command="{Binding CalculateCommand}"/>
+
+        <!-- Totals -->
+        <VerticalStackLayout Grid.Row="3" 
+                             Spacing="15" 
+                             VerticalOptions="FillAndExpand"
+                             Margin="20">
+            <!-- Total -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Total"
+                       HorizontalOptions="Center"
+                       TextColor="Purple"
+                       FontSize="Large"
+                       FontAttributes="Bold"
+                       Grid.Row="0"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="Fragrance Weight"
+                               TextColor="Purple"
+                               FontAttributes="Bold"
+                               FontSize="Body"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding TotalFragrance, StringFormat='{0.00}'}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label Text="Wax Weight"
+                               TextColor="Purple"
+                               FontAttributes="Bold"
+                               FontSize="Body"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding TotalWaxWeight, StringFormat='{0.00}'}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+            <!-- Per Vessel -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Text="Per Vessel" 
+                       HorizontalOptions="Center"
+                       TextColor="Purple"
+                       FontSize="Large"
+                       FontAttributes="Bold"
+                       Grid.Row="0"/>
+                    <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <VerticalStackLayout Grid.Column="0"
+                                         Spacing="10">
+                        <Label Text="Fragrance Weight"
+                               TextColor="Purple"
+                               FontAttributes="Bold"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Medium"/>
+                        <Label Text="{Binding FragrancePerVessel, StringFormat='{0.00}'}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Small"/>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="10">
+                        <Label Text="Wax Weight"
+                               TextColor="Purple"
+                               FontAttributes="Bold"
+                               FontSize="Medium"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                        <Label Text="{Binding WaxPerVessel, StringFormat='{0.00}'}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Small"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Grid>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
