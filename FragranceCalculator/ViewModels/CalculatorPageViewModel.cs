@@ -170,10 +170,12 @@ namespace FragranceCalculator.ViewModels
         [RelayCommand]
         private void Calculate()
         {
-            this.FragrancePerVessel = Calculator.FragrancePerVessel(this.VesselFill, this.TotalPercentage);
-            this.WaxPerVessel = Calculator.WaxPerVessel(this.VesselFill, this.TotalPercentage);
-            this.TotalFragrance = Calculator.TotalFragranceWeight(this.FragrancePerVessel, this.NumberOfVessels);
-            this.TotalWaxWeight = Calculator.TotalWaxWeight(this.WaxPerVessel, this.NumberOfVessels);
+            TotalCalculator calculator = new TotalCalculator();
+            var maxVesselFill = this.VesselFill * this.NumberOfVessels;
+            this.FragrancePerVessel = calculator.CalculateFragrance(this.VesselFill, this.TotalPercentage);
+            this.WaxPerVessel = this.VesselFill;
+            this.TotalWaxWeight = calculator.CalculateTotalWaxGrams(maxVesselFill, this.TotalPercentage);
+            this.TotalFragrance = calculator.CalculateFragrance(maxVesselFill, this.TotalPercentage);
         }
     }
 }
